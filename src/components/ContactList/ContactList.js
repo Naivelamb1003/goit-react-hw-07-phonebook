@@ -12,7 +12,7 @@ class ContactList extends Component {
     this.props.fetchContacts();
   }
   render() {
-    const { contacts, deleteContacts } = this.props;
+    const { contacts } = this.props;
     console.log(contacts);
     return (
       <>

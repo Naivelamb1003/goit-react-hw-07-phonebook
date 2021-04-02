@@ -1,5 +1,5 @@
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
-import { v4 as uuidv4 } from "uuid";
+
 import { createAction } from "@reduxjs/toolkit";
 
 export const addContactRequest = createAction("phonebook/addContactRequest");

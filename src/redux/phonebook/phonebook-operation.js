@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import {
-  fetchContactsSuccess,
   addContactRequest,
   addContactSuccess,
   addContactError,
@@ -43,12 +42,10 @@ export const fetchContacts = () => (dispatch) => {
 
   axios
     .get("/contacts")
-    .then(({ data }) => dispatch(fetchContactsSuccess(data)))
+    .then(({ data }) => dispatch(fetchContactSuccess(data)))
     .catch((error) => dispatch(fetchContactError(error.massage)));
 };
 
-export default {
-  addContact,
-  deleteContacts,
-  fetchContacts,
-};
+const contactsOperations = { fetchContacts, addContact, deleteContacts };
+
+export default contactsOperations;
