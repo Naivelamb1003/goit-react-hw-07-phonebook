@@ -4,7 +4,7 @@ import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import Filter from "./components/Filter/Filter";
 import { CSSTransition } from "react-transition-group";
-import Alert from './components/Alert/Alert';
+import Alert from "./components/Alert/Alert";
 
 class App extends Component {
   state = {
@@ -12,35 +12,39 @@ class App extends Component {
     showAlert: false,
   };
 
- 
   render() {
     return (
       <>
-      <CSSTransition in={this.state.showAlert} timeout={500} classNames={style} unmountOnExit>
+        <CSSTransition
+          in={this.state.showAlert}
+          timeout={500}
+          classNames={style}
+          unmountOnExit
+        >
           <Alert message={this.state.message} />
         </CSSTransition>
-      <div className={style.container}>
-        <div>
-          <CSSTransition
-            in={true}
-            appear={true}
-            timeout={500}
-            classNames={style}
-            unmountOnExit
-          >
-            <h1 className={style.title}>Phonebook</h1>
-          </CSSTransition>
+        <div className={style.container}>
+          <div>
+            <CSSTransition
+              in={true}
+              appear={true}
+              timeout={500}
+              classNames={style}
+              unmountOnExit
+            >
+              <h1 className={style.title}>Phonebook</h1>
+            </CSSTransition>
 
-          <ContactForm />
-        </div>
+            <ContactForm />
+          </div>
 
-        <div>
-          <h1 className={style.title}>Contacts</h1>
-          <p className={style.title}>Find contacts by name</p>
-          <Filter />
-          <ContactList />
+          <div>
+            <h1 className={style.title}>Contacts</h1>
+            <p className={style.title}>Find contacts by name</p>
+            <Filter />
+            <ContactList />
+          </div>
         </div>
-      </div>
       </>
     );
   }
