@@ -14,18 +14,29 @@ import {
 
 axios.defaults.baseURL = "http://localhost:4545";
 
-export const addContact = (namber, telf) => (dispatch) => {
+const isContactNew = (state, name) => {
+  if (state.map((c) => c.name.toLowerCase()).includes(name.toLowerCase())) {
+    throw new Error("Contact already exist");
+  }
+  return true;
+};
+
+export const addContact = (number, telf) => async (dispatch, getState) => {
   const contact = {
-    name: namber,
+    name: number,
     number: telf,
   };
 
   dispatch(addContactRequest());
 
-  axios
-    .post("/contacts", contact)
-    .then(({ data }) => dispatch(addContactSuccess(data)))
-    .catch((error) => dispatch(addContactError(error.massage)));
+  try {
+    if (isContactNew(getState().phonebook.contacts, contact.name)) {
+      const response = await axios.post("/contacts", contact);
+      dispatch(addContactSuccess(response.data));
+    }
+  } catch (error) {
+    dispatch(addContactError(error.message));
+  }
 };
 
 export const deleteContacts = (Id) => (dispatch) => {
@@ -33,8 +44,8 @@ export const deleteContacts = (Id) => (dispatch) => {
 
   axios
     .delete(`/contacts/${Id}`)
-    .then(() => dispatch(deleteContactSuccess(Id)))
-    .catch((error) => dispatch(deleteContactError(error.massage)));
+    .then(() => dispatch(deleteContactSuccess(Number(Id))))
+    .catch((error) => dispatch(deleteContactError(error.message)));
 };
 
 export const fetchContacts = () => (dispatch) => {
@@ -43,7 +54,7 @@ export const fetchContacts = () => (dispatch) => {
   axios
     .get("/contacts")
     .then(({ data }) => dispatch(fetchContactSuccess(data)))
-    .catch((error) => dispatch(fetchContactError(error.massage)));
+    .catch((error) => dispatch(fetchContactError(error.message)));
 };
 
 const contactsOperations = { fetchContacts, addContact, deleteContacts };

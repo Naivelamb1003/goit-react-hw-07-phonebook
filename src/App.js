@@ -5,6 +5,8 @@ import ContactList from "./components/ContactList/ContactList";
 import Filter from "./components/Filter/Filter";
 import { CSSTransition } from "react-transition-group";
 import Alert from "./components/Alert/Alert";
+import phonebookSelector from "./redux/phonebook/phonebook-selector";
+import { connect } from "react-redux";
 
 class App extends Component {
   state = {
@@ -16,12 +18,12 @@ class App extends Component {
     return (
       <>
         <CSSTransition
-          in={this.state.showAlert}
+          in={this.props.showAlert}
           timeout={500}
           classNames={style}
           unmountOnExit
         >
-          <Alert message={this.state.message} />
+          <Alert message={this.props.errorMessage} />
         </CSSTransition>
         <div className={style.container}>
           <div>
@@ -49,4 +51,9 @@ class App extends Component {
     );
   }
 }
-export default App;
+const mapStateToProps = (state) => ({
+  errorMessage: phonebookSelector.getError(state),
+  showAlert: Boolean(phonebookSelector.getError(state)),
+});
+
+export default connect(mapStateToProps)(App);

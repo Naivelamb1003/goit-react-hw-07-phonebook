@@ -20,7 +20,7 @@ class ContactList extends Component {
           {contacts.map((contact) => (
             <CSSTransition key={contact.id} timeout={250} classNames={style}>
               <ContactListItem
-                id={contact.id}
+                id={String(contact.id)}
                 name={contact.name}
                 number={contact.number}
               />
