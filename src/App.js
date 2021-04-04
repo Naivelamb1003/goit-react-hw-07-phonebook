@@ -9,11 +9,6 @@ import phonebookSelector from "./redux/phonebook/phonebook-selector";
 import { connect } from "react-redux";
 
 class App extends Component {
-  state = {
-    message: false,
-    showAlert: false,
-  };
-
   render() {
     return (
       <>
